@@ -1,36 +1,35 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import { AppContextProvider } from "@/context/AppContext";
+import ClientProviders from "@/components/ClientProviders";
+import "./globals.css";
+import "./prism.css";
 
 const inter = Inter({
-  variable: "--font-inder",
   subsets: ["latin"],
+  variable: "--font-inter", // Fixed variable name
 });
-
-
 
 export const metadata: Metadata = {
   title: "DeepSeek",
-  description: "Chat with DeepSeek AI – your intelligent assistant for coding, content creation, file reading, and more. Upload documents, engage in long-context conversations, and get expert help in AI, natural language processing, and beyond. | 深度求索（DeepSeek）助力编程代码开发、创意写作、文件处理等任务，支持文件上传及长文本对话，随时为您提供高效的AI支持。",
+  description:
+    "Chat with DeepSeek AI – your intelligent assistant for coding, content creation, file reading, and more...",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ 
+  children 
+}: { 
+  children: React.ReactNode 
+}) {
   return (
     <ClerkProvider>
-      <AppContextProvider>
-          <html lang="en">
-            <body
-              className={`${inter.className} antialiased`}>
-              {children}
-            </body>
-          </html>
-      </AppContextProvider>
+      <html lang="en" className={inter.variable}>
+        <body className={`font-sans antialiased`}>
+          <ClientProviders>
+            {children}
+          </ClientProviders>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
